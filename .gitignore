@@ -1,0 +1,17 @@
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.swp
+
+node_modules/
+.env
+
+service_python/products.csv
+service_python/models/*.pkl
+
+.
