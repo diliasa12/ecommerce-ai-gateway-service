@@ -1,0 +1,53 @@
+version: '3.8'
+
+services:
+  mysql-db:
+    image: mysql:8.0
+    container_name: ecommerce-mysql
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: rootpassword
+      MYSQL_DATABASE: db_ecommerce
+    ports:
+      - "3306:3306"
+    volumes:
+      - mysql_data:/var/lib/mysql
+    networks:
+      - ecommerce-network
+
+  # --- PYTHON MACHINE LEARNING SERVICE ---
+  ml-service:
+    build: ./service_python
+    container_name: ecommerce-ml
+    restart: always
+    ports:
+      - "8000:8000"
+    networks:
+      - ecommerce-network
+
+  # --- EXPRESS.JS API GATEWAY SERVICE ---
+  gateway-service:
+    build: ./service_utama
+    container_name: ecommerce-gateway
+    restart: always
+    ports:
+      - "3000:3000"
+    environment:
+      - PORT=3000
+      - DB_HOST=mysql-db
+      - DB_USER=root
+      - DB_PASSWORD=rootpassword
+      - DB_NAME=db_ecommerce
+      - ML_SERVICE_URL=http://ml-service:8000
+    depends_on:
+      - mysql-db
+      - ml-service
+    networks:
+      - ecommerce-network
+
+volumes:
+  mysql_data:
+
+networks:
+  ecommerce-network:
+    driver: bridge
