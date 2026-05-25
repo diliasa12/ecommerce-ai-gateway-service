@@ -1,3 +1,4 @@
+
 .DS_Store
 Thumbs.db
 .vscode/
@@ -8,10 +9,25 @@ Thumbs.db
 *.sln
 *.swp
 
-node_modules/
-.env
+**/service_utama/node_modules/
+**/service_utama/npm-debug.log*
+**/service_utama/yarn-debug.log*
+**/service_utama/yarn-error.log*
+**/service_utama/.env
 
-service_python/products.csv
-service_python/models/*.pkl
+# ==========================================
+# 3. Python ML (service_python)
+# ==========================================
+**/service_python/venv/
+**/service_python/env/
+**/service_python/__pycache__/
+**/service_python/*.pyc
+**/service_python/*.pyo
+**/service_python/*.pyd
 
-.
+# --- CRITICAL: Dataset & Model Binaries ---
+# Jangan upload file CSV 600MB+ dan file model ke Git
+**/service_python/products.csv
+**/service_python/models/*.pkl
+
+.dockertrust/
